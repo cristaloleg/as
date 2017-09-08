@@ -1,3 +1,6 @@
+.PHONY: all install build test lint
+PKG = $(shell go list ./... | grep -v /vendor/)
+
 all: install build test
 
 install:
@@ -9,3 +12,7 @@ build:
 
 test:
 	go test -v ${PKG}
+
+lint:
+	golint ${PKG}
+	go vet ${PKG}
