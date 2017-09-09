@@ -12,15 +12,12 @@ matrix:
   fast_finish: true
 
 before_install:
-  - make install
+  - go get github.com/golang/lint/golint
 
 script:
-  - make lint
-  - make test
-
-after_success:
-  - travis_retry goveralls -coverprofile=cover.out -service=travis-ci
-  - bash <(curl -s https://codecov.io/bash)
+  - go vet ./...
+  - golint ./...
+  - go test -v ./...
 
 notifications:
   email:
